@@ -435,7 +435,7 @@ export class AppError extends Error {
 #### Step 5: Create `src/middlewares/globar-error-handler.middleware.ts`
 
 ```ts
-import { AppError } from "@/utils/app-error.util";
+import { AppError } from "@/utils/error/app-error.util";
 import { NextFunction, Request, Response } from "express";
 
 export const globalErrorHandler = (
