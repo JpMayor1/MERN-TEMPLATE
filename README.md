@@ -332,13 +332,13 @@ npm init -y
 #### Core Packages
 
 ```bash
-npm install express mongoose cors dotenv cookie-parser bcryptjs jsonwebtoken morgan helmet express-rate-limit express-mongo-sanitize
+npm install express mongoose cors dotenv cookie-parser bcryptjs jsonwebtoken morgan helmet express-rate-limit @exortek/express-mongo-sanitize
 ```
 
 #### Type Definitions and Dev Tools
 
 ```bash
-npm install -D typescript tsx @types/node @types/express @types/cors @types/cookie-parser @types/bcryptjs @types/jsonwebtoken @types/morgan @types/express-rate-limit @types/express-mongo-sanitize
+npm install -D typescript tsx @types/node @types/express @types/cors @types/cookie-parser @types/bcryptjs @types/jsonwebtoken @types/morgan @types/express-rate-limit
 ```
 
 ---
@@ -486,10 +486,10 @@ export const globalRateLimiter = rateLimit({
 import dotenv from "dotenv";
 dotenv.config();
 
+import expressMongoSanitize from "@exortek/express-mongo-sanitize";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
-import mongoSanitize from "express-mongo-sanitize";
 import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
@@ -536,7 +536,7 @@ const bootstrap = async () => {
   app.use(express.json());
 
   // Prevent NoSQL Injection
-  app.use(mongoSanitize());
+  app.use(expressMongoSanitize());
 
   // Cookie parser
   app.use(cookieParser());
