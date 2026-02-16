@@ -11,18 +11,18 @@ MERN apps that need robust JWT-based auth.
 
 ## Table of Contents
 
-1.  Project Overview\
-2.  Tech Stack\
-3.  Features\
-4.  Architecture / How It Works\
-5.  Folder Structure\
-6.  Environment Variables\
-7.  API Documentation\
-8.  Data Models (Backend)\
-9.  Frontend Usage\
-10. Security Notes\
-11. Setup & Run\
-12. Troubleshooting
+1. [Project Overview](#-project-overview)
+2. [Tech Stack](#-tech-stack)
+3. [Features](#-features)
+4. [Architecture / How It Works](#-architecture--how-it-works)
+5. [Folder Structure](#-folder-structure)
+6. [Environment Variables](#-environment-variables)
+7. [API Documentation](#-api-documentation)
+8. [Data Models (Backend)](#-data-models-backend)
+9. [Frontend Usage](#-frontend-usage)
+10. [Security Notes](#-security-notes)
+11. [Setup & Run](#-setup--run)
+12. [Troubleshooting](#-troubleshooting)
 
 ---
 
