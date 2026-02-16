@@ -18,7 +18,9 @@ export const updateAccountS = async (
   data: Partial<AccountType>,
 ): Promise<AccountDocumentType | null> => {
   const account = await Account.findOneAndUpdate(filter, data, {
-    new: true,
+    returnDocument: "after",
+    runValidators: true,
+    lean: true,
   }).exec();
   return account as AccountDocumentType | null;
 };

@@ -1,17 +1,24 @@
-import { useAuthStore } from "@/stores/auth/auth.store";
+// Libraries
 import { motion } from "framer-motion";
 import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+// Stores
+import { useAuthStore } from "@/stores/auth/auth.store";
+import { useTokenStore } from "@/stores/token/token.store";
 
 export default function LogoutBtn() {
   const loading = useAuthStore((s) => s.loading);
   const logout = useAuthStore((s) => s.logout);
+  const setClearToken = useTokenStore((s) => s.setClearToken);
 
   const navigate = useNavigate();
 
   const submitLogout = async () => {
     const success = await logout();
-    if (success) navigate("/auth/login", { replace: true });
+    if (success) {
+      setClearToken();
+      navigate("/auth/login", { replace: true });
+    }
   };
 
   return (

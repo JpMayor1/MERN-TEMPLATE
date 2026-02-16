@@ -1,14 +1,12 @@
+// Libraries
+import type { RouteObject } from "react-router-dom";
+// Layouts
 import HomeLayout from "@/layouts/home/HomeLayout";
+// Pages
 import HomePage from "@/pages/home/HomePage";
-import type { RouteObject } from "react-router";
 
 export const homeRoutes: RouteObject = {
   path: "home",
   Component: HomeLayout,
-  children: [
-    {
-      index: true,
-      Component: HomePage,
-    },
-  ],
+  children: [{ index: true, Component: HomePage }],
 };

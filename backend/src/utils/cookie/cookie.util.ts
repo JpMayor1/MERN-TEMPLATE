@@ -1,7 +1,7 @@
 import type { Response } from "express";
 
-export const REFRESH_COOKIE_NAME = "refresh_token";
-export const REFRESH_COOKIE_PATH = "/api/auth";
+export const REFRESH_COOKIE_NAME = process.env.REFRESH_COOKIE_NAME as string;
+export const REFRESH_COOKIE_PATH = process.env.REFRESH_COOKIE_PATH as string;
 
 export const setRefreshCookie = (res: Response, token: string) => {
   res.cookie(REFRESH_COOKIE_NAME, token, {

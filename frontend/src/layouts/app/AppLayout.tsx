@@ -1,22 +1,40 @@
-import { useAuthStore } from "@/stores/auth/auth.store";
+// Libraries
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+// Stores
+import { useTokenStore } from "@/stores/token/token.store";
+// Components
+import SplashScreen from "@/components/general/SplashScreen";
 
-const AppLayout = () => {
-  const refreshToken = useAuthStore((state) => state.refreshToken);
+const MIN_SPLASH_MS = 1000;
 
-  const navigate = useNavigate();
+export default function AppLayout() {
+  const loading = useTokenStore((s) => s.loading);
+  const accessToken = useTokenStore((s) => s.accessToken);
+  const init = useTokenStore((s) => s.init);
 
   useEffect(() => {
-    const initialize = async () => {
-      const success = await refreshToken();
-      if (!success) return navigate("/");
-      navigate("/home");
+    let cancelled = false;
+
+    const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+    (async () => {
+      const start = Date.now();
+      await init();
+
+      const elapsed = Date.now() - start;
+      const remaining = Math.max(0, MIN_SPLASH_MS - elapsed);
+      if (remaining) await sleep(remaining);
+
+      if (cancelled) return;
+    })();
+
+    return () => {
+      cancelled = true;
     };
-    initialize();
-  }, []);
+  }, [init]);
+
+  if (loading && accessToken === null) return <SplashScreen />;
 
   return <Outlet />;
-};
-
-export default AppLayout;
+}

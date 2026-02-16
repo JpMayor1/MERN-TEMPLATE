@@ -1,12 +1,20 @@
-import { useAuthStore } from "@/stores/auth/auth.store";
-import type { AccountType } from "@/types/account/account.type";
+// Libraries
 import { motion } from "framer-motion";
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type SubmitEventHandler } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// Types
+import type { AccountType } from "@/types/account/account.type";
+// Stores
+import { useAuthStore } from "@/stores/auth/auth.store";
+import { useTokenStore } from "@/stores/token/token.store";
+// Components
 import CustomInput from "../../../components/input/CustomInput";
+import BackToLandingPage from "@/components/general/BackToLandingPage";
 
 export default function LoginPage() {
-  const { loading, setLogin } = useAuthStore();
+  const loading = useAuthStore((s) => s.loading);
+  const setLogin = useAuthStore((s) => s.setLogin);
+  const setToken = useTokenStore((s) => s.setToken);
   const navigate = useNavigate();
 
   const [form, setForm] = useState<Partial<AccountType>>({
@@ -19,10 +27,13 @@ export default function LoginPage() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submitForm = async (e: FormEvent) => {
+  const submitForm: SubmitEventHandler = async (e) => {
     e.preventDefault();
     const success = await setLogin(form);
-    if (success) navigate("/home");
+    if (success && typeof success === "string") {
+      setToken(success);
+      navigate("/home");
+    }
   };
 
   return (
@@ -30,6 +41,8 @@ export default function LoginPage() {
       {/* Background glow */}
       <div className="absolute w-100 h-100 bg-indigo-500/20 blur-[120px] rounded-full -top-40 -left-40" />
       <div className="absolute w-87.5 h-87.5 bg-purple-500/20 blur-[120px] rounded-full -bottom-40 -right-40" />
+
+      <BackToLandingPage />
 
       <motion.form
         onSubmit={submitForm}

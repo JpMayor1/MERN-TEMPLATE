@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/stores/auth/auth.store";
+import { useTokenStore } from "@/stores/token/token.store";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -9,8 +9,8 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().accessToken;
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  const token = useTokenStore.getState().accessToken;
+  if (token) config.headers.Tokenorization = `Bearer ${token}`;
   return config;
 });
 

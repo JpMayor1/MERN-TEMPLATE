@@ -1,32 +1,16 @@
-import {
-  loginApi,
-  logoutApi,
-  refreshTokenApi,
-  registerApi,
-} from "@/api/auth/auth.api";
-import type { AuthStoreType } from "@/types/auth/auth.type";
-import { showError } from "@/utils/error/error.util";
+// Libraries
 import toast from "react-hot-toast";
 import { create } from "zustand";
+// Types
+import type { AuthStoreType } from "@/types/auth/auth.type";
+// Utils
+import { showError } from "@/utils/error/error.util";
+// APi's
+import { loginApi, logoutApi, registerApi } from "@/api/auth/auth.api";
 
 export const useAuthStore = create<AuthStoreType>((set) => ({
-  accessToken: null,
   loading: false,
 
-  refreshToken: async () => {
-    try {
-      const response = await refreshTokenApi();
-      set({ accessToken: response.accessToken });
-      return true;
-    } catch (error) {
-      console.error(error);
-      set({ accessToken: null });
-      return false;
-    }
-  },
-  setAccessToken: (token) => {
-    set({ accessToken: token });
-  },
   setRegister: async (data) => {
     set({
       loading: true,
@@ -34,8 +18,7 @@ export const useAuthStore = create<AuthStoreType>((set) => ({
     try {
       const response = await registerApi(data);
       toast.success(response.message);
-      set({ accessToken: response.accessToken });
-      return true;
+      return response.accessToken;
     } catch (error) {
       showError(error);
       return false;
@@ -50,8 +33,7 @@ export const useAuthStore = create<AuthStoreType>((set) => ({
     try {
       const response = await loginApi(data);
       toast.success(response.message);
-      set({ accessToken: response.accessToken });
-      return true;
+      return response.accessToken;
     } catch (error) {
       showError(error);
       return false;
@@ -66,7 +48,6 @@ export const useAuthStore = create<AuthStoreType>((set) => ({
     try {
       const response = await logoutApi();
       toast.success(response.message);
-      set({ accessToken: null });
       return true;
     } catch (error) {
       console.error(error);
@@ -75,8 +56,5 @@ export const useAuthStore = create<AuthStoreType>((set) => ({
     } finally {
       set({ loading: false });
     }
-  },
-  setClearToken: () => {
-    set({ accessToken: null });
   },
 }));

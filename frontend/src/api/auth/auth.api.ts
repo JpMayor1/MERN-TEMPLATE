@@ -15,8 +15,3 @@ export const logoutApi = async () => {
   const response = await axiosInstance.post("/auth/logout");
   return response.data;
 };
-
-export const refreshTokenApi = async () => {
-  const response = await axiosInstance.post("/auth/refresh");
-  return response.data;
-};

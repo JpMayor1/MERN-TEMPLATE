@@ -19,6 +19,7 @@ import { globalRateLimiter } from "@/middlewares/limiter.middleware";
 
 // Routes
 import { authRouter } from "@/routes/auth/auth.route";
+import { tokenRouter } from "@/routes/token/token.route";
 
 const bootstrap = async () => {
   const app = express();
@@ -74,6 +75,7 @@ const bootstrap = async () => {
 
   // Routes
   app.use("/api/auth", authRouter);
+  app.use("/api/token", tokenRouter);
 
   // 404 handler: Invalid route
   app.use((req, res) => {

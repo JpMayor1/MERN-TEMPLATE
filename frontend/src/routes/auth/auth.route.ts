@@ -1,23 +1,17 @@
+// Libraries
+import type { RouteObject } from "react-router-dom";
+// Layouts
 import AuthLayout from "@/layouts/auth/AuthLayout";
+// Pages
 import LoginPage from "@/pages/auth/login/LoginPage";
 import RegisterPage from "@/pages/auth/register/RegisterPage";
-import type { RouteObject } from "react-router";
+import LandingPage from "@/pages/general/LandingPage";
 
 export const authRoutes: RouteObject = {
-  path: "auth",
   Component: AuthLayout,
   children: [
-    {
-      index: true,
-      Component: LoginPage,
-    },
-    {
-      path: "login",
-      Component: LoginPage,
-    },
-    {
-      path: "register",
-      Component: RegisterPage,
-    },
+    { index: true, Component: LandingPage },
+    { path: "auth/login", Component: LoginPage },
+    { path: "auth/register", Component: RegisterPage },
   ],
 };
